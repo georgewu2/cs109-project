@@ -2,7 +2,9 @@
 .dropbox
 DataOfLegends-*
 lookup*
-match*
+matchD*
+matchI*
+matchS*
 get*
 cs109*
 all*
