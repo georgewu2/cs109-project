@@ -155,14 +155,14 @@
   After this, we worked on a model to predict gold difference using the same Random Forest approach. 
 </p>
 <p style="text-align: center">
-  <img src="images/goldResults.png"></img> </br>
+  <img src="images/goldresults.png"></img> </br>
   Gold earned in a game by each team is an extremely strong indicator of game dominance and can very accurately predict the game outcome. We put together this visualization to make sure that, in the cases when gold dominance doesn't match win outcome, there is not a skew.
 </p>
 <p>
   We bucketed gold differences into less than -10000 (almost definite loss), -10000-0 (likely loss), 0-10000 (likely win), and 10000+ (almost definite win). We were able to predict these with ~30% accuracy benchmarked against a baseline of 25% from guessing, though this benchmark may not be entirely accurate due to the distribution of gold differentials. When incorporating gold differentials and the likelihood of an unexpected result, our model did not seem to improve.
 </p>
 <p style="text-align: center">
-  <img src="images/goldAccuracy.png"></img> </br>
+  <img src="images/goldaccuracy.png"></img> </br>
   Percent of results with better than 25% accuracy: 99.0
 </p>
 <p>
