@@ -91,24 +91,104 @@
 <h3>
 <a id="data-analysis" class="anchor" href="#data-analysis" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Analysis</h3>
 
-
 <h6>Team Synergies</h6>
-
 <p>
-
+  Teamwork is essential to succeeding in a game of League, and often certain champions' abilities complement each other extremely well. We decided to statistically analyze how team compositions effect a team's chances against an opponent. Can we successfully predict game outcomes simply by supplying an algorithm trained on historical synergies with two team compositions?
+</p>
+<p style="text-align: center">
+    <img src="images/distribution2.png"></img>
+</p>
+<p>
+  After gathering data on team compositions and match results from the Riot API, we constructed a lookup table of champion pairs and their historical game win percentage together. To visualize our data distribution, we constructed the graph above. With enough data, we were able to see the curve flatten: meaning most of our champions pairs had a significant amount of win-loss history. 
+</p>
+<p style="text-align: center">
+  <img src="images/distribution3.png"></img>
+</p>
+<p>
+  We also attempted to calculate a similar lookup table for champion triples, but unfortunately found that there is actually only a very small percentage of triples data that has a sufficient sample size for the triples data to have true predictive power. For the triple data, only 10% of the data has a sample size larger than 10. As a result, we did a lot of analysis that ended up adding more noise than information, and decided to focus our synergy analysis on champion pairs rather than triples or a higher number of combinations.
+</p>
+<p>
+  With this lookup table, we were able to train a random forest classifier with the probabilities supplied by each combination of champions on any team on our training set. We set a binary variable to represent a win or loss, and took inspriation from the Wine Classification problem set to train the random forest model to predict the win or loss based on champion pairs that existed within each team. After training our classifier, we tested it on a separate testing data set in the same format - giving 10 champions as input (split into two teams) and receiving a win/loss prediction as output. Our results are as follows:
+</p>
+<p style="text-align: center">
+  <img src="images/accuracyResults.png"></img></br>
+  Percent of results with better than 50% accuracy: 93.0
+</p>
+<p>
+</p>
+<p style="text-align: center">
+  <img src="images/pvalueResults.png"></img> </br>
+  Percent of p-values significant at 10% level: 47.0
+</p>
+<p>
+  We found that 93% of the time, our results are better than randomly guessing (a 50% chance of a correct prediction). Based on this predictive power, we could be making money if we started betting on games! However, the next step was to move our predictions to Esports games, the professional competitive matches that generate millions in revenue and capture worldwide attention, where the players are treated as celebrities especially in countries like China and Korea. Unfortunately our algorithm did not prove very effective in predicting the results of Esports championship games, as shown in our visualizations below:
+</p>
+<p style="text-align: center">
+  <img src="images/accuracyResultsEsports.png"></img></br>
+  Percent of results with better than 50% accuracy: 93.0
+</p>
+<p>
+</p>
+<p style="text-align: center">
+  <img src="images/pvalueResultsEsports.png"></img> </br>
+  Percent of p-values significant at 10% level: 47.0
+</p>
+<p>
+  Based on these results, we can see that our statistical predictors don't have much external validation with the esports data set and performs extremely poorly. This makes sense because professional esports games are by nature very different than the ranked games that we were examining, as the teams are very familiar with each other, can communicate extremely effectively, and have practiced various strategies together during training. The nature of the games that result may depend less on champion select and more on teamwork and cooperation than the solo-queue games in challenger tier, which is what we trained our data set on. 
+</p>
+<p>
+  After this, we worked on a model to predict gold difference using the same Random Forest approach. 
+</p>
+<p style="text-align: center">
+  <img src="images/goldResults.png"></img> </br>
+  Gold earned in a game by each team is an extremely strong indicator of game dominance and can very accurately predict the game outcome. We put together this visualization to make sure that, in the cases when gold dominance doesn't match win outcome, there is not a skew.
+</p>
+<p>
+  We bucketed gold differences into less than -10000 (almost definite loss), -10000-0 (likely loss), 0-10000 (likely win), and 10000+ (almost definite win). We were able to predict these with ~30% accuracy benchmarked against a baseline of 25% from guessing, though this benchmark may not be entirely accurate due to the distribution of gold differentials. When incorporating gold differentials and the likelihood of an unexpected result, our model did not seem to improve.
+</p>
+<p style="text-align: center">
+  <img src="images/goldAccuracy.png"></img> </br>
+  Percent of results with better than 25% accuracy: 99.0
+</p>
+<p>
+  Seeing that we have 4 buckets, here we can see that our gold difference results do relatively well. However we have not yet adjusted this for the fact that there are different sample sizes in each of the 4 buckets which may make 25% not the ideal benchmark for our results.
 </p>
 
+
 <h6>Lane Matchups</h6>
+<p>
+  After considering team synergies, we decided that simply considering champion team synergies did not encompass all of the effects of champion select. Because some champions are built to counter other champions, or have a marginally larger attack range that can cause one champion to outlane another. Therefore we decided it would be important to examine whether certain champions win with a much higher likelihood against certain lane opponents, and attempt to predict games with those probabilities. 
+</p>
+<p>
+  We first split the match data we have into a testing set and training set, and accumulate a match history dictionary of wins and losses between different pairings of champions that are matched up in each lane. These win-loss histories are calculated into probabilities and then training a random forest classifier on these probabilities to predict the wins and losses of games in a testing set.
+</p>
+<p>
+  Often times, certain champions can prove to be effective counters against another champion in lane, and the differences between champions of opposing sides in the same lane can be significant enough to severely affect the early game and may snowball into the late game and affect game outcomes. For instance, if some champions have a much larger range than other champions, they may be able to effectively poke and harrass the other champion out of lane. Other champions (for instance, Veigar) have skills and stats built to scale on his enemy's Ability Power damage, and can be extremely effective against champions who rely on AP to make their own skills effective. These differences are introduced when champions are selected, and even though they may affect game outcome, have nothing to do with the actual skill of the players - so we are interested in measuring these inherent differences.
+</p>
+<p style="text-align: center">
+  <img src="images/boxplotMatchups.png"></img> </br>
+  Classifier score by number of trees used in random forest
+</p>
+<p>
+  We analyzed matchup data with a similar approach as we took for synergy data - creating a lookup table with match histories of different pairings of champions when they were laning against each other. With these percentages, we trained a random forest classifier and tested the resulting model on data that was set aside for testing. However, our prediction results weren't great, as we only got around 52.1% predictive accuracy on the test set.
+</p>
 
 <h6>Interesting Statistics</h6>
+<p>
+  Lastly, we slightly expanded the scope of our project by taking a look of some in-game events. We found that obtaining First Blood (the first kill in the game) had a 60% prediction accuracy, first tower (an objective in the game) had an 85% prediction accuracy, and lastly first inhibitor (another major objective) had a 90% prediction accuracy.
+</p>
+<p>
+  In conclusion, we see that although we can provide some insight on how games are expected to turn out from champion selection (pre-game events), knowledge of game events, even early ones, have significantly increased predictive power. This suggests that skill plays a major component in League of Legends at a near-professional level.
+</p>
 
-<a id="predicting" class="anchor" href="#prediction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Predicting Game Outcomes</h3>
-
-<h6>glub</h6>
+<h3>
+<a id="data-analysis" class="anchor" href="#data-analysis" aria-hidden="true"><span class="octicon octicon-link"></span></a>Predicting Game Outcomes</h3>
+<div id="predictor">
+  predictor UI here
+</div>
 
 </section>
 </div>
-
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
@@ -116,8 +196,5 @@
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-
-    
-
   </body>
 </html>
