@@ -193,7 +193,19 @@
 
 <h6>Interesting Statistics</h6>
 <p>
-  Lastly, we slightly expanded the scope of our project by taking a look of some in-game events. We found that obtaining First Blood (the first kill in the game) had a 60% prediction accuracy, first tower (an objective in the game) had an 85% prediction accuracy, and lastly first inhibitor (another major objective) had a 90% prediction accuracy.
+  We slightly expanded the scope of our project by taking a look of some in-game events.
+  There are some interesting things we can calculate from the data supplied by the Riot API. For example, we can calculate the probability of winning a game given that one of your lanes gets the first blood, or based on game structures destroyed such as turrets and inhibitors.
+</p>
+<p style="text-align: center">
+  <img src="images/otherstats.png"></img> </br>
+  Information that we re-queried the Riot API for
+</p>
+<p>
+  Lastly, we want to understand whether a team with a single very strong player (these strong players are called fed players) can perform better than teams where the champions share the kills or are more evenly matched in skill level. Since we are interested in the impact of skill level on game outcomes, this is an interesting branch of skill impact to explore. In terms of the data, if the standard deviation of the kills on the team is larger, there is a high chance that there is a fed player on the team, whereas if the standard deviation of the kills on the team is smaller, the champions are balanced and tend to have a similar number of kills.
+</p>
+<p style="text-align: center">
+  <img src="images/otherstatsresults.png"></img> </br>
+  Results of our analysis
 </p>
 <p>
   In conclusion, we see that although we can provide some insight on how games are expected to turn out from champion selection (pre-game events), knowledge of game events, even early ones, have significantly increased predictive power. This suggests that skill plays a major component in League of Legends at a near-professional level.
