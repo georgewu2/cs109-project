@@ -4169,7 +4169,7 @@ console.log('line info '+__BRYTHON__.line_info)
 if($err.py_error===undefined)$err=_b_.RuntimeError($err+'')
 var $trace=$err.__name__+': '+$err.message+'\n'+$err.info
 _b_.getattr($B.stderr,'write')($trace)
-throw $err
+// throw $err
 }}}}
 $B.$operators=$operators
 $B.$Node=$Node
