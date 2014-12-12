@@ -8,6 +8,10 @@
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
     <script src="javascripts/brython.js"></script>
+    <script type="text/javascript" src="javascripts/jquery.js"></script>
+    <script type="text/javascript" src="javascripts/main.js"></script>
+    <script type="text/javascript" src="javascripts/jquery.scrollTo.js"></script>
+    <script type="text/javascript" src="javascripts/jquery.localscroll.js"></script>
     <title>Data of Legends</title>
   </head>
 
@@ -15,26 +19,49 @@
   <script type="text/python" src="/setup.py"></script>
 
     <!-- HEADER -->
+    <div class="anchor">
+      <a id="home"></a>
+</div>
+
     <div id="header_wrap" class="outer">
         <header class="inner">
           <a id="forkme_banner" href="https://github.com/georgewu2/cs109-project">View on GitHub</a>
 
           <h1 id="project_title">Data of Legends</h1>
           <h2 id="project_tagline">A detailed look into League of Legends data.</h2>
-
+<!-- 
             <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/georgewu2/cs109-project/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/georgewu2/cs109-project/tarball/master">Download this project as a tar.gz file</a>
-            </section>
+              <a class="zip_download_link" href="/DataOfLegends.ipynb">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="/DataOfLegends.ipynb">Download this project as a tar.gz file</a>
+            </section> -->
         </header>
     </div>
 
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
+<!-- Nav bar -->   
+<div id="nav1" class = "nav">
+  <ul>
+    <li><a class="current" href="#home">Home</a></li>
+    <li><a href="#video">Video</a></li>
+    <li><a href="#problem">Problem and Data Collection</a></li>
+    <li><a href="#data">Data Analysis</a></li>
+       <ul style="margin-bottom:0px">
+          <li><a href="#synergies">Synergies</a></li>
+          <li><a href="#matchups">Matchups</a></li>
+          <li><a href="#other">Other Stats</a></li>
+      </ul>
+    <li><a href="#predictor">Predicting Game Outcomes</a></li>
+  </ul>
+</div>
       <section id="main_content" class="inner">
-        <h3>
-<a id="video" class="anchor" href="#video" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Video</h3>
 
+<div class="anchor">
+      <a id="video"></a>
+      </br>
+</div>
+<h3>
+<a id="video" class="anchor" href="#video" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Video</h3>
 <p>VIDEO GOES HERE</p>
 <iframe width="560" height="315" src="//www.youtube.com/embed/mFIJFlpMRm4" frameborder="0" allowfullscreen></iframe>
 
@@ -73,6 +100,10 @@
   Because league professional competitions have been increasingly heavily covered in the press, and involve millions of dollars of sponsorships, revenue, and prize money, we wanted to figure out how much a simple champion selection can actually affect the outcome of a game. How much of a professional League of Legends game win is the result of superior skill, and how much of it is decided by each team's luck and knowledge of which champions to pick at the beginning? This is what we set out to find out. 
 </p>
 
+<div class="anchor">
+      <a id="problem"></a>
+      </br>
+</div>
 <h3>
 <a id="problem-data-collection" class="anchor" href="#problem-data-collection" aria-hidden="true"><span class="octicon octicon-link"></span></a>Problem and Data Collection</h3>
 
@@ -107,9 +138,16 @@
 <p>Below is an example of the dataframe that contains each match.</p>
 <img src="images/matches_df.png"></img>
 
+<div class="anchor">
+      <a id="data"></a>
+      </br>
+</div>
 <h3>
 <a id="data-analysis" class="anchor" href="#data-analysis" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Analysis</h3>
-
+<div class="anchor">
+      <a id="synergies"></a>
+      </br>
+</div>
 <h6>Team Synergies</h6>
 <p>
   Teamwork is essential to succeeding in a game of League, and often certain champions' abilities complement each other extremely well. We decided to statistically analyze how team compositions effect a team's chances against an opponent. Can we successfully predict game outcomes simply by supplying an algorithm trained on historical synergies with two team compositions?
@@ -173,7 +211,10 @@
   Seeing that we have 4 buckets, here we can see that our gold difference results do relatively well. However we have not yet adjusted this for the fact that there are different sample sizes in each of the 4 buckets which may make 25% not the ideal benchmark for our results.
 </p>
 
-
+<div class="anchor">
+      <a id="matchups"></a>
+      </br>
+</div>
 <h6>Lane Matchups</h6>
 <p>
   After considering team synergies, we decided that simply considering champion team synergies did not encompass all of the effects of champion select. Because some champions are built to counter other champions, or have a marginally larger attack range that can cause one champion to outlane another. Therefore we decided it would be important to examine whether certain champions win with a much higher likelihood against certain lane opponents, and attempt to predict games with those probabilities. 
@@ -191,7 +232,10 @@
 <p>
   We analyzed matchup data with a similar approach as we took for synergy data - creating a lookup table with match histories of different pairings of champions when they were laning against each other. With these percentages, we trained a random forest classifier and tested the resulting model on data that was set aside for testing. However, our prediction results weren't great, as we only got around 52.1% predictive accuracy on the test set.
 </p>
-
+<div class="anchor">
+      <a id="other"></a>
+      </br>
+</div>
 <h6>Interesting Statistics</h6>
 <p>
   We slightly expanded the scope of our project by taking a look of some in-game events.
@@ -212,6 +256,10 @@
   In conclusion, we see that although we can provide some insight on how games are expected to turn out from champion selection (pre-game events), knowledge of game events, even early ones, have significantly increased predictive power. This suggests that skill plays a major component in League of Legends at a near-professional level.
 </p>
 
+<div class="anchor">
+      <a id="prediction"></a>
+    </br>
+</div>
 <h3>
 <a id="data-analysis" class="anchor" href="#data-analysis" aria-hidden="true"><span class="octicon octicon-link"></span></a>Predicting Game Outcomes</h3>
 <div id="predictor">
