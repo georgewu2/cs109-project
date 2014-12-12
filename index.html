@@ -7,11 +7,12 @@
     <meta name="description" content="Data of Legends : A detailed look into League of Legends data.">
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
+    <script src="javascripts/brython.js"></script>
     <title>Data of Legends</title>
   </head>
 
-  <body>
+  <body onload="brython()">
+  <script type="text/python" src="/setup.py"></script>
 
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
@@ -79,14 +80,31 @@
 <p>
   With the gameplay in mind, we wanted to explore the following:
   <ol type="1">
-    <li>Explore the challenger tier dataset and find interesting results.</li>
+    <li>Explore the <strong>challenger</strong> tier dataset and find interesting results.</li>
+    <li>Try to predict outcomes of games by training on data and testing on other data.</li>
+    <li>Try to predict team gold differential based on team compositions.</li>
   </ol>
 </p>
 
 <h6>Data Collection</h6>
-<p>
 
+<p>
+  To perform the analysis, we needed to get data first. What we wanted was all the data from high level matches. Unforunately, Riot's API is more suited for looking up a specific player's data, and not all the matches in a specific tier.
 </p>
+
+<p>
+  Luckily, there was still a way to get the data that we wanted. We were able to retrieve a list of players in the challenger tier (there are 200 of them), and for each player in the challenger tier, we retrieved a list of match IDs. We combined all the lists into a set and removed duplicates and filtered out only the relevant matches. Since the game will have changes every year, we decided to focus only on the 2014 season. The last problem was that we were rate limited by the API to 10 requests every 10 seconds. Thus, in order to retrieve the data, we had different computers run the retrieval on different portions of the dataset, and then we stored the data into a file so that we did not have to poll Riot's API again.
+</p>
+
+<p>Below is am example of the dataframe that contains each player in the challenger tier.</p>
+<img src="images/summoner_df.png"></img>
+
+<p>
+  After retrieving the data, we found that some of the matches were inconsistent with our assumptions. A few of the matches contained multiple junglers on a single team, and a few of the matches contained no mid laners. We filtered out these matches because in actual professional play, these unorthodox compositions never happen.
+</p>
+
+<p>Below is an example of the dataframe that contains each match.</p>
+<img src="images/matches_df.png"></img>
 
 <h3>
 <a id="data-analysis" class="anchor" href="#data-analysis" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Analysis</h3>
