@@ -213,3 +213,4 @@ def create_prob_full(champ_pairs, champ_triples, pairlist, triplelist, final_com
 
 if __name__ == "__main__":
     main()
+    alert("Setup completed!")
