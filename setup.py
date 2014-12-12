@@ -11,20 +11,6 @@ import scipy.stats as stats
 from sklearn.cross_validation import cross_val_score
 from sklearn.ensemble import RandomForestClassifier
 
-def main():
-	api_key = 'c977fbae-0c60-4d6c-a3dc-ee1b305dbdd7'
-	category = ['top1', 'jun1', 'mid1', 'adc1', 'sup1', 'top2', 'jun2', 'mid2', 'adc2', 'sup2', 'Winner']
-	train = pickle.load(open('train.pckl', 'rb'))
-	lookup_table2 = pickle.load(open('lookuptable2.pckl', 'rb'))
-	position_pairs = pickle.load(open('position_pairs.pckl', 'rb'))
-	train_reduced = pickle.load(open('train_reduced.pckl', 'rb'))
-	trim_lookup2 = lookup_table2[lookup_table2['Matches'] >= 5].reset_index(drop=True)
-	X = train_reduced.as_matrix()
-	Y = np.array(train['Winner']) 
-	forest_train = RandomForestClassifier(n_estimators=18).fit(X, Y)
-	categ = ['top1', 'jun1', 'mid1', 'adc1', 'sup1', 'top2', 'jun2', 'mid2', 'adc2', 'sup2', 'Winner']
-
-
 """
 Finds all possible combinations of pairs/triples for each team in each match
 Input:
@@ -211,6 +197,14 @@ def create_prob_full(champ_pairs, champ_triples, pairlist, triplelist, final_com
         pos_comb[final_comb[i]] = array
     return pos_comb
 
-if __name__ == "__main__":
-    main()
-    alert("Setup completed!")
+api_key = 'c977fbae-0c60-4d6c-a3dc-ee1b305dbdd7'
+train = pickle.load(open('train.pckl', 'rb'))
+lookup_table2 = pickle.load(open('lookuptable2.pckl', 'rb'))
+position_pairs = pickle.load(open('position_pairs.pckl', 'rb'))
+train_reduced = pickle.load(open('train_reduced.pckl', 'rb'))
+trim_lookup2 = lookup_table2[lookup_table2['Matches'] >= 5].reset_index(drop=True)
+X = train_reduced.as_matrix()
+Y = np.array(train['Winner']) 
+forest_train = RandomForestClassifier(n_estimators=18).fit(X, Y)
+categ = ['top1', 'jun1', 'mid1', 'adc1', 'sup1', 'top2', 'jun2', 'mid2', 'adc2', 'sup2', 'Winner']
+alert("Setup completed!")
