@@ -13,4 +13,4 @@ Please visit https://www.dropbox.com/sh/q1zma1omnbdcoa4/AAD8hfKSiDz71fsaQF7YjuRI
 
 ## Instructions on how to run the demo
 
-Clone the directory and execute `python predictions.py`. The instructions are located within the program.
+Clone the directory and execute `python prediction.py`. The instructions are located within the program.
